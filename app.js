@@ -1,17 +1,14 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const { ObjectId } = require('mongodb')
 const port = (process.env.PORT || 5500)
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://barrycumbie:fr1urj7dVc5OhnuX@cluster0.saltcdu.mongodb.net/?retryWrites=true&w=majority";
-
-
+const uri = process.env.MONGO_URI; 
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
-
-
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
