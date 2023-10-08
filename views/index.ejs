@@ -13,7 +13,8 @@
     <% for (var i=0; i< profileData.length; i++ ) { %>
       <form method="POST">  
         <input type="hidden" id="devId" name="devId" value="<%= profileData[i]._id %>"></input>
-        <input type="text" id="devName" name="devName" value="<%= profileData[i].name %>"></input>
+        <input type="text" id="devName" name="devName" value="<%= profileData[i].devName %>"></input>
+        <p><%= profileData[i].devName %>'s GitHub = <%= profileData[i].devGitHub %></p>
         
         <button class="btn btn-primary" type="submit" formaction="/updateProfile">Update Dev Name</button>
         <button class="btn btn-warning" type="submit" formaction="/deleteProfile">Delete Dev </button>

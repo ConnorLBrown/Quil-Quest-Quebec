@@ -19,43 +19,13 @@ const client = new MongoClient(uri, {
   }
 });
 
-async function run() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-//run().catch(console.dir);
-
-async function cxnDB(){
-
-  try{
-    await client.connect().then(
-      client.db("barrys-cool-papa-database").collection("dev-profiles")
-      );       
-  }
-  catch(e){
-      console.log(e)
-  }
-  finally{
-    client.close; 
-  }
-}
-
-
 app.get('/', async (req, res) => {
 
- client.connect;
-  let mongoResult = await client.db("barrys-cool-papa-database").collection("dev-profiles").find().toArray();
-// console.log("get/: ", result);
-console.log(mongoResult);
-  //'res.send("here for a second: " + result[0].name)
+  client.connect;
+  let mongoResult = await client.db("cuddly-palm-not-tree-papa-solution").collection("dev-profiles").find().toArray();
+  
+  console.log(mongoResult);
+  
   res.render('index', { 
     profileData : mongoResult })
 })
@@ -68,12 +38,12 @@ app.post('/updateProfile', async (req, res) => {
     console.log("user Name: ", req.body.devName)
     
     client.connect; 
-    const collection = client.db("barrys-cool-papa-database").collection("dev-profiles");
+    const collection = client.db("cuddly-palm-not-tree-papa-solution").collection("dev-profiles");
   
     // put it into mongo
     let result = await collection.findOneAndUpdate( 
       { _id: new ObjectId( req.body.devId ) },
-      {$set: {name: req.body.devName }})
+      {$set: {devName: req.body.devName }})
       .then(result => {
         console.log(result); 
         res.redirect('/');
@@ -95,11 +65,11 @@ app.post('/insertProfile', async (req, res) => {
     console.log("user Name: ", req.body.devName)
     
     client.connect; 
-    const collection = client.db("barrys-cool-papa-database").collection("dev-profiles");
+    const collection = client.db("cuddly-palm-not-tree-papa-solution").collection("dev-profiles");
   
     // put it into mongo
     let result = await collection.insertOne( 
-      { name: req.body.newDevName })
+      { devName: req.body.newDevName })
       .then(result => {
         console.log(result); 
         res.redirect('/');
@@ -121,7 +91,7 @@ app.post('/deleteProfile', async (req, res) => {
     console.log("user Name: ", req.body.devName)
     
     client.connect; 
-    const collection = client.db("barrys-cool-papa-database").collection("dev-profiles");
+    const collection = client.db("cuddly-palm-not-tree-papa-solution").collection("dev-profiles");
   
     // put it into mongo
     let result = await collection.findOneAndDelete( 
@@ -138,43 +108,5 @@ app.post('/deleteProfile', async (req, res) => {
     //client.close()
   }
 })
-
-let myVariableServer = 'soft coded server data';
-
-app.get('/barry', function (req, res) {
-  res.render('index', 
-  {
-    'myVariableClient' : myVariableServer 
-  }
-  );
-})
-
-app.post('/postClientData', function (req, res) {
-  
-   console.log("body: ", req.body)
-   console.log("user Name: ", req.body.userName)
-  //  console.log("params: ", req.params['userName']);
-  
-  // myVariableServer = req.body.userName;
-
-  res.render('index', 
-  {
-    'myVariableClient' : req.body.userName 
-  }
-  );
-})
-
-
-// app.get('/', function (req, res) {
-//   res.send('<h1>Hello World From Express & a PaaS/Render</h1>')
-// })
-
-// app.get('/whatever', function (req, res) {
-//   res.sendFile(__dirname + '/index.html');
-// })
-
-
-
-// app.listen(3000)
 
 app.listen(port, () => console.log(`Server is running...on ${ port }` ));
