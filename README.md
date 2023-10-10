@@ -1,3 +1,3 @@
 # Quebec
 
-fork my own branch and followed video.
+forked my own branch and followed video.
